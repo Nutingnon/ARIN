@@ -67,10 +67,12 @@ class Division:
     def control_variant(x_curr_nom, x_curr_denom,
                         x_base_nom, x_base_denom, 
                         y_curr, y_base):
-        def analysis_helper(y_sub, y_curr, y_base):
-            den = y_curr - y_base
-            nu = y_curr - y_sub
-            return nu/den
+        
+        def analysis_helper(y_sub, y_base):
+            return y_sub - y_base
+
+
+
         res = []
         for i in range(len(x_curr_denom)):
             curr_deno_i = x_curr_denom[i]
@@ -81,8 +83,8 @@ class Division:
             x_curr_nom[i] = base_nomi_i
             x_curr_denom[i] = base_deno_i
 
-            y_sub = np.sum(x_curr_nom)/np.sum(x_curr_denom)
-            res.append(analysis_helper(y_sub, y_curr, y_base))
+            y_sub = np.sum(x_curr_nom) / np.sum(x_curr_denom)
+            res.append(analysis_helper(y_sub, y_base))
 
             x_curr_nom[i] = curr_nomi_i
             x_curr_denom[i] = curr_deno_i
@@ -94,7 +96,8 @@ class Division:
     # https://www.volcengine.com/docs/4726/1217644 组合指标的算法说明
     @staticmethod
     def decomposition(x_curr_nom, x_curr_denom,
-                    x_base_nom, x_base_denom, y_curr, y_base):
+                    x_base_nom, x_base_denom, 
+                    y_curr, y_base):
         x_curr_ratio = x_curr_nom/x_curr_denom
         x_base_ratio = x_base_nom/x_base_denom
         diff_nom_ratio = (x_curr_ratio - x_base_ratio) * x_curr_denom / np.sum(x_base_denom)
